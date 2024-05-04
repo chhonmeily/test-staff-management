@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 
 const StaffSchema = new mongoose.Schema({
-  staffId: {
-    type: mongoose.Schema.Types.ObjectId,
-  },
   fullName: {
     type: mongoose.Schema.Types.String,
   },
