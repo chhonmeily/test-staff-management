@@ -35,3 +35,19 @@ export const editStaffByIdHandler = async (request, response) => {
     return response.sendStatus(400);
   }
 };
+
+export const deleteStaffByIdHandler = async (request, response) => {
+  const id = request.params.id;
+  try {
+    await Staff.findByIdAndDelete(id);
+    response.sendStatus(200);
+  } catch (error) {
+    response.sendStatus(400);
+  }
+};
+
+export const getAllStaffHandler = async (request, response) => {
+  await Staff.find().then((result) => {
+    response.send(result);
+  });
+};

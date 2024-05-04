@@ -8,6 +8,8 @@ import {
   createStaffHandler,
   editStaffByIdHandler,
   getStaffByIdHandler,
+  deleteStaffByIdHandler,
+  getAllStaffHandler,
 } from "./handlers/staff.mjs";
 const app = express();
 
@@ -28,10 +30,7 @@ app.listen(PORT, () => {
   console.log(`Running on Port ${PORT}`);
 });
 
-//get all staff
-app.get("/api/staff", (request, response) => {
-  response.status(201).send(mockStaff);
-});
+app.get("/api/staff", getAllStaffHandler);
 
 app.post(
   "/api/staff",
@@ -42,6 +41,8 @@ app.post(
 app.get("/api/staff/:id", getStaffByIdHandler);
 
 app.patch("/api/staff/:id", editStaffByIdHandler);
+
+app.delete("/api/staff/:id", deleteStaffByIdHandler);
 
 app.get("/", (request, response) => {
   response.status(201).send({ msg: "Hello" });
