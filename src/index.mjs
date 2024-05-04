@@ -10,6 +10,7 @@ import {
   getStaffByIdHandler,
   deleteStaffByIdHandler,
   getAllStaffHandler,
+  searchStaffByQuery,
 } from "./handlers/staff.mjs";
 const app = express();
 
@@ -43,6 +44,8 @@ app.get("/api/staff/:id", getStaffByIdHandler);
 app.patch("/api/staff/:id", editStaffByIdHandler);
 
 app.delete("/api/staff/:id", deleteStaffByIdHandler);
+
+app.get("/api/search", searchStaffByQuery);
 
 app.get("/", (request, response) => {
   response.status(201).send({ msg: "Hello" });
