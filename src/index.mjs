@@ -4,7 +4,11 @@ import { mockStaff } from "./utils/constants.mjs";
 import _ from "lodash";
 import { checkSchema } from "express-validator";
 import { createStaffValidationSchema } from "./utils/validation-schema.mjs";
-import { createStaffHandler, getStaffByIdHandler } from "./handlers/staff.mjs";
+import {
+  createStaffHandler,
+  editStaffByIdHandler,
+  getStaffByIdHandler,
+} from "./handlers/staff.mjs";
 const app = express();
 
 mongoose
@@ -36,6 +40,8 @@ app.post(
 );
 
 app.get("/api/staff/:id", getStaffByIdHandler);
+
+app.patch("/api/staff/:id", editStaffByIdHandler);
 
 app.get("/", (request, response) => {
   response.status(201).send({ msg: "Hello" });
