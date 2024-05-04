@@ -56,10 +56,10 @@ export const searchStaffByQuery = async (request, response) => {
   const { gender, dateOfBirthFrom, dateOfBirthTo } = request.query;
   console.log(dateOfBirthFrom);
   console.log(dateOfBirthTo);
-  let foundUser;
+  let foundStaff;
   const parsedGender = parseInt(gender);
   if (gender !== undefined) {
-    foundUser = await Staff.find({ gender: parsedGender });
+    foundStaff = await Staff.find({ gender: parsedGender });
   }
-  response.send(foundUser);
+  response.send(foundStaff);
 };
