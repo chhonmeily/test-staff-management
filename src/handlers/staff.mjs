@@ -19,3 +19,13 @@ export const createStaffHandler = async (request, response) => {
     return response.sendStatus(400);
   }
 };
+
+export const getStaffByIdHandler = async (request, response) => {
+  const id = request.params.id;
+  try {
+    const findStaff = await Staff.findById(id);
+    return response.status(201).send(findStaff);
+  } catch (error) {
+    return response.sendStatus(400);
+  }
+};

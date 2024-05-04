@@ -4,7 +4,7 @@ import { mockStaff } from "./utils/constants.mjs";
 import _ from "lodash";
 import { checkSchema } from "express-validator";
 import { createStaffValidationSchema } from "./utils/validation-schema.mjs";
-import { createStaffHandler } from "./handlers/staff.mjs";
+import { createStaffHandler, getStaffByIdHandler } from "./handlers/staff.mjs";
 const app = express();
 
 mongoose
@@ -35,22 +35,7 @@ app.post(
   createStaffHandler
 );
 
-// app.get("/api/staff/:id", (request, response) => {
-//   const id = request.params.id;
-//   const parseId = String(id);
-//   console.log(parseId);
-//   if (!_.isString(parseId)) return response.sendStatus(400);
-//   const findStaffById = mockStaff.findIndex(
-//     (staff) => staff.staffId === parseId
-//   );
-
-//   if (findStaffById === -1) return response.sendStatus(404);
-//   request.findStaffById = findStaffById;
-
-//   const findUser = mockStaff[findStaffById];
-//   if (!findUser) return response.sendStatus(404);
-//   return response.send(findUser);
-// });
+app.get("/api/staff/:id", getStaffByIdHandler);
 
 app.get("/", (request, response) => {
   response.status(201).send({ msg: "Hello" });
