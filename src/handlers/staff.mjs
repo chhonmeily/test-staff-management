@@ -54,12 +54,12 @@ export const getAllStaffHandler = async (request, response) => {
 
 export const searchStaffByQuery = async (request, response) => {
   const { gender, dateOfBirthFrom, dateOfBirthTo } = request.query;
-  console.log(dateOfBirthFrom);
-  console.log(dateOfBirthTo);
   let foundStaff;
   const parsedGender = parseInt(gender);
   if (gender !== undefined) {
     foundStaff = await Staff.find({ gender: parsedGender });
+    response.send(foundStaff);
+  } else {
+    response.sendStatus(404);
   }
-  response.send(foundStaff);
 };
