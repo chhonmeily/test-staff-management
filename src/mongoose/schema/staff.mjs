@@ -5,7 +5,7 @@ const StaffSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.String,
   },
   dateOfBirth: {
-    type: mongoose.Schema.Types.String,
+    type: mongoose.Schema.Types.Date,
   },
   gender: {
     type: mongoose.Schema.Types.Number,

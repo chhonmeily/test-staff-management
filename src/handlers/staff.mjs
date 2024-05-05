@@ -3,6 +3,10 @@ import { Staff } from "../mongoose/schema/staff.mjs";
 import { mockStaff } from "../utils/constants.mjs";
 
 export const createStaffHandler = async (request, response) => {
+  //convert date to ISODate format before insert to database
+  const date = new Date(request.body.dateOfBirth);
+  const convertDate = date.toISOString();
+  request.body.dateOfBirth = convertDate;
   const result = validationResult(request);
   if (!result.isEmpty()) return response.status(400).send(result.array());
   const data = matchedData(request);
@@ -26,11 +30,19 @@ export const getStaffByIdHandler = async (request, response) => {
 };
 
 export const editStaffByIdHandler = async (request, response) => {
+  //convert date to ISODate format before insert to database
+  const date = new Date(request.body.dateOfBirth);
+  const convertDate = date.toISOString();
+  request.body.dateOfBirth = convertDate;
   const id = request.params.id;
   const data = request.body;
   try {
-    await Staff.findByIdAndUpdate({ _id: id }, data);
-    return response.sendStatus(200);
+    const updatedStaff = await Staff.findByIdAndUpdate({ _id: id }, data, {
+      safe: true,
+      upsert: true,
+      new: true,
+    });
+    return response.send(updatedStaff);
   } catch (error) {
     return response.sendStatus(400);
   }

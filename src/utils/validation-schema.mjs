@@ -20,11 +20,7 @@ export const createStaffValidationSchema = {
     },
   },
   dateOfBirth: {
-    isDate: {
-      option: {
-        format: "YYYY-MM-DD",
-      },
-    },
+    isDate: true,
   },
   gender: {
     notEmpty: {
