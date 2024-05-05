@@ -78,8 +78,6 @@ export const searchStaffByQuery = async (request, response) => {
       },
     });
     response.send(foundStaff);
-    console.log(`Birthday From:` + convertBirthDayFrom);
-    console.log(`Birthday To:` + convertBirthDayTo);
   } else {
     response.sendStatus(404);
   }
