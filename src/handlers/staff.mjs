@@ -62,7 +62,7 @@ export const getAllStaffHandler = async (request, response) => {
 };
 
 export const searchStaffByQuery = async (request, response) => {
-  const { gender, dateOfBirthFrom, dateOfBirthTo } = request.query;
+  const { id, gender, dateOfBirthFrom, dateOfBirthTo } = request.query;
   let foundStaff;
   const parsedGender = parseInt(gender);
   if (gender !== undefined) {
@@ -77,6 +77,9 @@ export const searchStaffByQuery = async (request, response) => {
         $lt: convertBirthDayTo,
       },
     });
+    response.send(foundStaff);
+  } else if (id !== undefined) {
+    foundStaff = await Staff.findById(id);
     response.send(foundStaff);
   } else {
     response.sendStatus(404);
