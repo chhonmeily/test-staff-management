@@ -1,11 +1,9 @@
 import { matchedData, validationResult } from "express-validator";
 import { Staff } from "../mongoose/schema/staff.mjs";
-import { mockStaff } from "../utils/constants.mjs";
 
 export const createStaffHandler = async (request, response) => {
   //convert date to ISODate format before insert to database
-  const date = new Date(request.body.dateOfBirth);
-  const convertDate = date.toISOString();
+  const convertDate = new Date(request.body.dateOfBirth).toISOString();
   request.body.dateOfBirth = convertDate;
   const result = validationResult(request);
   if (!result.isEmpty()) return response.status(400).send(result.array());
@@ -30,9 +28,8 @@ export const getStaffByIdHandler = async (request, response) => {
 };
 
 export const editStaffByIdHandler = async (request, response) => {
-  //convert date to ISODate format before insert to database
-  const date = new Date(request.body.dateOfBirth);
-  const convertDate = date.toISOString();
+  //convert date to ISODate format before update to database
+  const convertDate = new Date(request.body.dateOfBirth).toISOString();
   request.body.dateOfBirth = convertDate;
   const id = request.params.id;
   const data = request.body;
@@ -71,6 +68,18 @@ export const searchStaffByQuery = async (request, response) => {
   if (gender !== undefined) {
     foundStaff = await Staff.find({ gender: parsedGender });
     response.send(foundStaff);
+  } else if (dateOfBirthFrom !== undefined && dateOfBirthTo !== undefined) {
+    let convertBirthDayFrom = new Date(dateOfBirthFrom).toISOString();
+    let convertBirthDayTo = new Date(dateOfBirthTo).toISOString();
+    foundStaff = await Staff.find({
+      dateOfBirth: {
+        $gte: convertBirthDayFrom,
+        $lt: convertBirthDayTo,
+      },
+    });
+    response.send(foundStaff);
+    console.log(`Birthday From:` + convertBirthDayFrom);
+    console.log(`Birthday To:` + convertBirthDayTo);
   } else {
     response.sendStatus(404);
   }
